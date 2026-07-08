@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Simple Web App{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>Simple Web App</h1>
+    {% if username %}
+      <div class="header-right">
+        <nav class="view-switch">
+          <a href="/insert" class="{% if active_page == 'insert' %}active{% endif %}">Insert</a>
+          <a href="/dashboard" class="{% if active_page == 'dashboard' %}active{% endif %}">Dashboard</a>
+        </nav>
+        <div class="nav-user">
+          <span>Signed in as <strong>{{ username }}</strong></span>
+          <button id="logout-btn">Log out</button>
+        </div>
+      </div>
+    {% endif %}
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

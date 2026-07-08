@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>All Records</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Topic</th>
+        <th>Description</th>
+        <th>Updated</th>
+      </tr>
+    </thead>
+    <tbody id="records-table-body"></tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Insert{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Insert / Edit Record</h2>
+  <form id="record-form">
+    <label>Topic
+      <select id="topic-select" name="topic_select"></select>
+    </label>
+    <label id="new-topic-wrapper" class="hidden">New topic name
+      <input type="text" id="new-topic-input" maxlength="100">
+    </label>
+    <input type="hidden" id="record-id">
+    <label>Description
+      <input type="text" id="description-input" maxlength="255">
+    </label>
+    <button type="submit">Save Record</button>
+  </form>
+  <p id="form-message" class="message"></p>
+</div>
+{% endblock %}

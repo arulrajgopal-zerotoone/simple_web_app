@@ -1,0 +1,84 @@
+name: Build and Deploy to Azure App Service
+
+on:
+  # push:
+  #   branches: [master]
+  workflow_dispatch: {}
+
+env:
+  # Matches the Terraform-provisioned resources in terraform_show.txt.
+  AZURE_WEBAPP_NAME: kaninipro-webapp-dev
+  AZURE_RESOURCE_GROUP: rg-webapp-dev
+  PYTHON_VERSION: "3.11"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies and sanity-check the app
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m compileall app
+
+      - name: Package application
+        run: zip -r release.zip . -x "*.git*" ".github/*" "__pycache__/*" "*.pyc" ".venv/*" "venv/*" ".env" "release.zip" "*.egg-info/*" "myenv/*" ".myenv/*"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-package
+          path: release.zip
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-package
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+
+      - name: Configure startup command (installs msodbcsql18, runs gunicorn)
+        run: |
+          az webapp config set \
+            --name "$AZURE_WEBAPP_NAME" \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --startup-file "startup.sh"
+
+      - name: Set application settings not managed by Terraform
+        run: |
+          az webapp config appsettings set \
+            --name "$AZURE_WEBAPP_NAME" \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --settings JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}"
+        # SQL_CONNECTION_STRING is already wired up via a Key Vault reference
+        # in the Terraform config (azurerm_linux_web_app.app.app_settings) -
+        # it is intentionally not set here to avoid duplicating that secret.
+
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: release.zip
+
+      - name: Azure logout
+        if: always()
+        run: az logout

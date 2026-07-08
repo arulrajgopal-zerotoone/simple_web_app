@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Sign Up</h2>
+  <form id="signup-form">
+    <label>Username
+      <input type="text" name="username" autocomplete="username" minlength="3" maxlength="50" required>
+    </label>
+    <label>Password
+      <input type="password" name="password" autocomplete="new-password" minlength="8" maxlength="128" required>
+    </label>
+    <label>Confirm Password
+      <input type="password" name="confirm_password" autocomplete="new-password" minlength="8" maxlength="128" required>
+    </label>
+    <button type="submit">Create Account</button>
+  </form>
+  <p id="signup-error" class="error"></p>
+  <p>Already have an account? <a href="/login">Log in</a></p>
+</div>
+{% endblock %}

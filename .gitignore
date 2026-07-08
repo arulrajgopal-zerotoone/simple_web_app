@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+release.zip
+*.egg-info/
+myenv/
+.myenv/
