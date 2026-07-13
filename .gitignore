@@ -7,3 +7,17 @@ release.zip
 *.egg-info/
 myenv/
 .myenv/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+crash.log
+crash.*.log
+.terraform.lock.hcl
+*.tfplan
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json

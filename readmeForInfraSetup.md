@@ -7,7 +7,7 @@ Steps to deploy the required Azure resources.
 ## 1. Clone the repository and navigate to the Terraform path
 
 ```bash
-cd IAC/terraform
+cd IAC/terraform/src
 ```
 
 ## 2. Initialize Terraform
