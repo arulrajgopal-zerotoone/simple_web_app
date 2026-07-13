@@ -1,3 +1,4 @@
+#variables
 resource_group_name = "rg-webapp-dev"
 
 sql_server_name    = "kaninipro-server-dev"
