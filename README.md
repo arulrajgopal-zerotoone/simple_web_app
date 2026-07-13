@@ -35,6 +35,9 @@ startup.sh             App Service startup command: installs msodbcsql18, runs g
 
 ## Infrastructure - will be provisioned via Terraform
 
+See [InfraSetup.md](InfraSetup.md) for the infrastructure setup steps — this is a
+prerequisite before deploying this app.
+
 | Resource | Name |
 |---|---|
 | Resource group | `rg-webapp-dev` |
