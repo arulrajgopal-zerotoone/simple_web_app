@@ -4,7 +4,7 @@ Steps to deploy the required Azure resources.
 
 > **Note:** These steps describe a local deployment. This can also be automated, but automation is outside the scope of this project/repository.
 
-## 1. Clone the repository and navigate to the Terraform path 
+## 1. Clone the repository and navigate to the Terraform path
 
 ```bash
 cd IAC/terraform/src
