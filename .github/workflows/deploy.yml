@@ -1,10 +1,10 @@
 name: Build and Deploy to Azure App Service
 
 on:
-  # push:
-  #   branches: [master]
-  #   paths-ignore:
-  #     - "IAC/**"
+  push:
+    branches: [master]
+    paths-ignore:
+      - "IAC/**"
   workflow_dispatch: {}
 
 env:
