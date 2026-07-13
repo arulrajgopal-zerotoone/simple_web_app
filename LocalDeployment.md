@@ -12,6 +12,7 @@
 5. Copy `.env.example` to `.env` and fill in `SQL_CONNECTION_STRING` and `JWT_SECRET_KEY`.
 6. Run: `uvicorn app.main:app --reload --env-file .env`
 7. Visit `http://localhost:8000` → redirects to `/login`.
+8. When you're done, exit the virtual environment: `deactivate`
 
 Tables (`Users`, `UserData`) are created automatically on startup if they don't exist.
 
