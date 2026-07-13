@@ -31,15 +31,6 @@ startup.sh             App Service startup command: installs msodbcsql18, runs g
   cookie and loads the `User` row. All queries filter by `user_id == current_user.user_id`,
   so one user can never see or modify another user's rows.
 
-## Local development
-
-1. Install Python 3.11 and the [ODBC Driver 18 for SQL Server](https://learn.microsoft.com/sql/connect/odbc/download-odbc-driver-for-sql-server) for your OS.
-2. `pip install -r requirements.txt`
-3. Copy `.env.example` to `.env` and fill in `SQL_CONNECTION_STRING` and `JWT_SECRET_KEY`.
-4. Run: `uvicorn app.main:app --reload --env-file .env`
-5. Visit `http://localhost:8000` → redirects to `/login`.
-
-Tables (`Users`, `UserData`) are created automatically on startup if they don't exist.
 
 
 ## Infrastructure - will be provisioned via Terraform
